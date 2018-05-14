@@ -7,9 +7,17 @@ Plane.prototype.isFlying = function() {
 };
 
 Plane.prototype.land = function() {
+  if (!this.isFlying()) {
+    throw new Error("Plane already landed");
+  }
+
   this.flying = false;
 };
 
 Plane.prototype.takeOff = function() {
-  this.flying = true;
+  if (this.isFlying()) {
+    throw new Error("Plane already flying");
+  }
+
+  this.flying = true
 };
