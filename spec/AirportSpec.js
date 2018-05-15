@@ -12,10 +12,26 @@ describe("Airport", function() {
   });
 
   describe("land", function() {
+    var flyingPlane = jasmine.createSpy('flyingPlane');
+    var weather;
+
+    beforeEach(function() {
+      weather = {
+        isStormy: function() {}
+      };
+    });
+
     it("is expected to land planes", function() {
-      var flyingPlane = jasmine.createSpy('flyingPlane');
-      airport.land(flyingPlane);
+      spyOn(weather, "isStormy").and.returnValue(false);
+      airport.land(flyingPlane, weather);
       expect(airport.planes).toContain(flyingPlane);
+    });
+
+    it("will not land plane when weather is stormy", function() {
+      spyOn(weather, "isStormy").and.returnValue(true);
+      expect(function(){
+        airport.land(flyingPlane, weather);
+      }).toThrowError("It's too stormy!")
     });
   });
 
@@ -59,4 +75,5 @@ describe("Airport", function() {
       }).toThrowError("It's too stormy!");
     });
   });
+
 });

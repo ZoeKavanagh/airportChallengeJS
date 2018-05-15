@@ -2,7 +2,11 @@ function Airport() {
   this.planes = [];
 };
 
-Airport.prototype.land = function(plane) {
+Airport.prototype.land = function(plane, weather) {
+  if (weather.isStormy()) {
+    throw new Error("It's too stormy!");
+  }
+  
   this.planes.push(plane);
 };
 
@@ -17,7 +21,3 @@ Airport.prototype.takeOff = function(plane, weather) {
 Airport.prototype._planeIndex = function(plane) {
   return this.planes.indexOf(plane);
 };
-
-// if (!this.isFlying()) {
-//   throw new Error("Plane already landed");
-// }
